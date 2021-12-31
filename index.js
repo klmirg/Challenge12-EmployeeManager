@@ -95,7 +95,7 @@ function addEmployee(){
       type: "list",
       name: "employeeManager",
       message: "Who is the employee's manager?",
-      choices: [""]
+      choices: ["Giang", "Paige", "Ana", "Erin", "None"]
     }
   ])
 }
