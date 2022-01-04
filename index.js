@@ -97,7 +97,12 @@ function addEmployee(){
       message: "Who is the employee's manager?",
       choices: ["Giang", "Paige", "Ana", "Erin", "None"]
     }
-  ])
+   ])
+//  .then(function ({ first_name, last_name, id, manager }) {
+//     connection.query("INSERT INTO employee (first_name, last_name, id, manager)
+//     VALUES ?",('first_name', 'last_name', 'manager'), function (err, result) {
+//       if (err) throw err;
+// })
 }
 
 // .then(function ({ first_name, last_name, manager }) {
