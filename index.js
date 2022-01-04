@@ -1,9 +1,6 @@
-const fs = require("fs")
-const path = require("path")
 const inquirer = require("inquirer")
-const connection = require("./db/connection")
-
-const employees = [];
+const connection = require("./db/connection");
+const db = require("./db")
 
 function viewDepartments (){
 
@@ -22,21 +19,12 @@ function viewRoles () {
 }
 
 function viewEmployees () {
-
-}
-
-function addDepartment (){
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "departmentName",
-      message: "What is the name of the department?"
-    },
-  ]).then(answers =>{
-    const department = new Department(answers.departmentName)
-    employees.push(department)
-    mainMenu()
+  db.findAllEmployees()
+  .then(([rows])=>{
+    let employees = rows;
+    console.table(employees)
   })
+  .then(()=> mainMenu());
 }
 
 function mainMenu(){
@@ -67,29 +55,70 @@ function mainMenu(){
   })
 };
 
-function addRole(){
+function addDepartment (){
   inquirer.prompt([
     {
+      type: "input",
+      name: "departmentName",
+      message: "What is the name of the new department?"
+    },
+  ]).then(answers =>{
+    const newDepartment = answers.departmentName
+    departments.push(newDepartment)
+    console.log('New department added!')
+    mainMenu()
+  })
+}
 
+function addRole(){
+ db.findAllDepartments()
+ .then(([rows])=>{
+  let departments = rows;
+  console.log(departments)
+  const departmentChoices = departments.map(({ id, department_name })=>({
+    name: department_name,
+    value: id
+  }))
+
+  inquirer.prompt([
+    {
+      name: "job_title",
+      message: "What is the name of the role?"
+    },
+    {
+      name: "salary",
+      message: "What is the salary of the role?"
+    },
+    {
+      type: "list",
+      name: "department_id",
+      message: "What department does the role belong to?",
+      choices: departmentChoices
     }
   ])
+  .then(role=>{
+    db.createRole(role)
+    .then(()=> console.log(`Added ${role.job_title} to the database`))
+    .then(()=> mainMenu())
+  })
+ })
 }
 
 function addEmployee(){
   inquirer.prompt([
     {
       type: "input",
-      name: "firstName",
+      name: "first_name",
       message: "What is the employee's first name?"
     },
     {
       type: "input",
-      name: "lastName",
+      name: "last_name",
       message: "What is the employee's last name?"
     },
     {
       type: "list",
-      name: "role",
+      name: "role_id",
       message: "What is the employee's role?",
       choices: ["Sales Lead", "Salesperson", "Lead Engineer", "Software Engineer", "Account Manager", "Accountant", "Legal Team Lead", "Lawyer"]
     },
@@ -100,8 +129,8 @@ function addEmployee(){
       choices: ["Giang", "Paige", "Ana", "Erin", "None"]
     }
    ])
- .then(function ({ firstName, lastName, role, employeeManager }) {
-   let data = {first_name: firstName, last_name: lastName, role_id: role, manager_id: employeeManager 
+ .then(function ({ first_name, last_name, role_id, employeeManager }) {
+   let data = {first_name, last_name, role_id, employeeManager 
   }
     connection.query("INSERT INTO employee set ?", data, function (err, result) {
       if (err) throw err;

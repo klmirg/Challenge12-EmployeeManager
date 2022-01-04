@@ -1,16 +1,11 @@
-  INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES   
-  ('Ronya', 'Gettis', 1, 4),
-  ('Giang', 'Nguyen', 2, null),
-  ('Paige', 'Kleeberger', 3, null),
-  ('Ana', 'Block', 4, null),
-  ('Sofia', 'Nguyen', 5, 2),
-  ('Rachel', 'Gettis', 6, 7),
-  ('Erin', 'Kleeberger', 7, null),
-  ('Paul', 'Erickson', 8, 4),
-  ('Jon', 'Wertjes', 9, 3);
+  INSERT INTO department (department_name)
+VALUES
+  ('Engineering'), 
+  ('Finance'), 
+  ('Legal'),
+  ('Sales');
 
-  INSERT INTO role (job_title, salary, department_id)
+      INSERT INTO roles (job_title, salary, department_id)
 VALUES
   ('Lawyer', 200000, 3),
   ('Lead Engineer', 75000, 1),
@@ -19,12 +14,18 @@ VALUES
   ('Software Engineer', 50000, 1),
   ('Salesperson', 45000, 4),
   ('Sales Lead', 50000, 4),
-  ('Lawyer', 200000, 3),
   ('Accountant', 75000, 2);
-  INSERT INTO department (department_name)
-VALUES
-  ('Engineering'), 
-  ('Finance'), 
-  ('Legal'),
-  ('Sales');
+
+    INSERT INTO employee (first_name, last_name, role_id)
+VALUES   
+  ('Ronya', 'Gettis', 1),
+  ('Giang', 'Nguyen', 2),
+  ('Paige', 'Kleeberger', 3),
+  ('Ana', 'Block', 4),
+  ('Sofia', 'Nguyen', 5),
+  ('Rachel', 'Gettis', 6),
+  ('Erin', 'Kleeberger', 7),
+  ('Paul', 'Erickson', 1),
+  ('Jon', 'Wertjes', 8);
+
 
