@@ -1,14 +1,14 @@
-  INSERT INTO employee (first_name, last_name, id, manager)
+  INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES   
-  ('Ronya', 'Gettis', 1, 'Ana Block'),
-  ('Giang', 'Nguyen', 2, 'null'),
-  ('Paige', 'Kleeberger', 3, 'null'),
-  ('Ana', 'Block', 4, 'null'),
-  ('Sofia', 'Nguyen', 5, 'Giang Nguyen'),
-  ('Rachel', 'Gettis', 6, 'Erin Kleeberger'),
-  ('Erin', 'Kleeberger', 7, 'null'),
-  ('Paul', 'Erickson', 8, 'Ana Block'),
-  ('Jon', 'Wertjes', 9, 'Paige Kleeberger');
+  ('Ronya', 'Gettis', 1, 4),
+  ('Giang', 'Nguyen', 2, null),
+  ('Paige', 'Kleeberger', 3, null),
+  ('Ana', 'Block', 4, null),
+  ('Sofia', 'Nguyen', 5, 2),
+  ('Rachel', 'Gettis', 6, 7),
+  ('Erin', 'Kleeberger', 7, null),
+  ('Paul', 'Erickson', 8, 4),
+  ('Jon', 'Wertjes', 9, 3);
 
   INSERT INTO role (job_title, salary, department_id)
 VALUES

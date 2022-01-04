@@ -1,18 +1,20 @@
 const fs = require("fs")
 const path = require("path")
 const inquirer = require("inquirer")
+const connection = require("./db/connection")
 
 const employees = [];
 
 function viewDepartments (){
-  inquirer.prompt([
-    {
-      type: "list",
-      name: "whichDepartment",
-      message: "Which department would you like to see employees for?",
-      choices: ["Engineering", "Finance", "Legal", "Sales"]
-    }
-  ])
+
+  // inquirer.prompt([
+  //   {
+  //     type: "list",
+  //     name: "whichDepartment",
+  //     message: "Which department would you like to see employees for?",
+  //     choices: ["Engineering", "Finance", "Legal", "Sales"]
+  //   }
+  // ])
 }
 
 function viewRoles () {
@@ -98,12 +100,15 @@ function addEmployee(){
       choices: ["Giang", "Paige", "Ana", "Erin", "None"]
     }
    ])
-//  .then(function ({ first_name, last_name, id, manager }) {
-//     connection.query("INSERT INTO employee (first_name, last_name, id, manager)
-//     VALUES ?",('first_name', 'last_name', 'manager'), function (err, result) {
-//       if (err) throw err;
-// })
-}
+ .then(function ({ firstName, lastName, role, employeeManager }) {
+   let data = {first_name: firstName, last_name: lastName, role_id: role, manager_id: employeeManager 
+  }
+    connection.query("INSERT INTO employee set ?", data, function (err, result) {
+      if (err) throw err;
+      console.log("Employee added!")
+    });
+  });
+};
 
 // .then(function ({ first_name, last_name, manager }) {
 //   connection.query("INSERT INTO employee (first_name, last_name, manager) 
