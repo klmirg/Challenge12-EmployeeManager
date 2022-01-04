@@ -3,19 +3,21 @@ const connection = require("./db/connection");
 const db = require("./db")
 
 function viewDepartments (){
-
-  // inquirer.prompt([
-  //   {
-  //     type: "list",
-  //     name: "whichDepartment",
-  //     message: "Which department would you like to see employees for?",
-  //     choices: ["Engineering", "Finance", "Legal", "Sales"]
-  //   }
-  // ])
+  db.findAllDepartments()
+  .then(([rows])=>{
+    let departments = rows;
+    console.table(departments)
+  })
+  .then(()=> mainMenu());
 }
 
 function viewRoles () {
-
+  db.findAllRoles()
+  .then(([rows])=>{
+    let roles = rows;
+    console.table(roles)
+  })
+  .then(()=> mainMenu());
 }
 
 function viewEmployees () {
@@ -59,14 +61,13 @@ function addDepartment (){
   inquirer.prompt([
     {
       type: "input",
-      name: "departmentName",
+      name: "department_name",
       message: "What is the name of the new department?"
     },
-  ]).then(answers =>{
-    const newDepartment = answers.departmentName
-    departments.push(newDepartment)
-    console.log('New department added!')
-    mainMenu()
+  ]).then(department =>{
+    db.createDepartment(department)
+    .then(()=> console.log(`Added ${department.department_name} to the database`))
+    .then(()=> mainMenu())
   })
 }
 
@@ -105,40 +106,55 @@ function addRole(){
 }
 
 function addEmployee(){
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "first_name",
-      message: "What is the employee's first name?"
-    },
-    {
-      type: "input",
-      name: "last_name",
-      message: "What is the employee's last name?"
-    },
-    {
-      type: "list",
-      name: "role_id",
-      message: "What is the employee's role?",
-      choices: ["Sales Lead", "Salesperson", "Lead Engineer", "Software Engineer", "Account Manager", "Accountant", "Legal Team Lead", "Lawyer"]
-    },
-    {
-      type: "list",
-      name: "employeeManager",
-      message: "Who is the employee's manager?",
-      choices: ["Giang", "Paige", "Ana", "Erin", "None"]
-    }
-   ])
- .then(function ({ first_name, last_name, role_id, employeeManager }) {
-   let data = {first_name, last_name, role_id, employeeManager 
-  }
-    connection.query("INSERT INTO employee set ?", data, function (err, result) {
-      if (err) throw err;
-      console.log("Employee added!")
-    });
-  });
+  db.findAllRoles()
+  .then(([rows])=>{
+    let roles = rows;
+    console.log(roles)
+    const rolesChoices = roles.map(({ id, job_title })=>({
+      name: job_title,
+      value: id
+    }))
+    // const managerChoices = roles.map(({ }))
+    
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "first_name",
+        message: "What is the employee's first name?"
+      },
+      {
+        type: "input",
+        name: "last_name",
+        message: "What is the employee's last name?"
+      },
+      {
+        type: "list",
+        name: "role_id",
+        message: "What is the employee's role?",
+        choices: rolesChoices
+      }
+      // {
+      //   type: "list",
+      //   name: "manager_id",
+      //   message: "Who is the employee's manager?",
+      //   choices: ["Giang", "Paige", "Ana", "Erin", "None"]
+      // }
+    ])
+    .then(employee=>{
+      db.createEmployee(employee)
+      .then(()=> console.log( `Added ${employee.first_name} ${employee.last_name} to the database`))
+      .then(()=> mainMenu())
+    })
+  })
 };
 
+// .then(function ({ first_name, last_name, role_id, manager_id }) {
+//   let data = {first_name, last_name, role_id, manager_id}
+//    connection.query("INSERT INTO employee set ?", data, function (err, result) {
+//      if (err) throw err;
+//      console.log("Employee added!")
+//    });
+//  });
 // .then(function ({ first_name, last_name, manager }) {
 //   connection.query("INSERT INTO employee (first_name, last_name, manager) 
 //        VALUES ?", ('first_name', 'last_name', 'manager'), function (err, result) {

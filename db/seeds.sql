@@ -16,16 +16,16 @@ VALUES
   ('Sales Lead', 50000, 4),
   ('Accountant', 75000, 2);
 
-    INSERT INTO employee (first_name, last_name, role_id)
+    INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES   
-  ('Ronya', 'Gettis', 1),
-  ('Giang', 'Nguyen', 2),
-  ('Paige', 'Kleeberger', 3),
-  ('Ana', 'Block', 4),
-  ('Sofia', 'Nguyen', 5),
-  ('Rachel', 'Gettis', 6),
-  ('Erin', 'Kleeberger', 7),
-  ('Paul', 'Erickson', 1),
-  ('Jon', 'Wertjes', 8);
+  ('Ronya', 'Gettis', 1, 4),
+  ('Giang', 'Nguyen', 2, null),
+  ('Paige', 'Kleeberger', 3, null),
+  ('Ana', 'Block', 4, null),
+  ('Sofia', 'Nguyen', 5, 2),
+  ('Rachel', 'Gettis', 6, 7),
+  ('Erin', 'Kleeberger', 7, null),
+  ('Paul', 'Erickson', 1, 4),
+  ('Jon', 'Wertjes', 8, 3);
 
 
