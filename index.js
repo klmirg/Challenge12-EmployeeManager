@@ -1,6 +1,7 @@
 const inquirer = require("inquirer")
 const connection = require("./db/connection");
 const db = require("./db")
+const cTable = require('console.table');
 
 function viewDepartments (){
   db.findAllDepartments()
@@ -132,13 +133,13 @@ function addEmployee(){
         name: "role_id",
         message: "What is the employee's role?",
         choices: rolesChoices
+      },
+      {
+        type: "list",
+        name: "manager",
+        message: "Who is the employee's manager?",
+        choices: ["Giang", "Paige", "Ana", "Erin", "None"]
       }
-      // {
-      //   type: "list",
-      //   name: "manager_id",
-      //   message: "Who is the employee's manager?",
-      //   choices: ["Giang", "Paige", "Ana", "Erin", "None"]
-      // }
     ])
     .then(employee=>{
       db.createEmployee(employee)
@@ -160,5 +161,6 @@ function addEmployee(){
 //        VALUES ?", ('first_name', 'last_name', 'manager'), function (err, result) {
 //       if (err) throw err;
 // })
+
 
 mainMenu();

@@ -19,7 +19,8 @@ class DB {
 
   findAllRoles(){
     return this.connection.promise().query(
-      "SELECT * FROM roles"
+      // "SELECT * FROM roles"
+      "SELECT roles.*, department.department_name AS department FROM roles LEFT JOIN department ON roles.department_id = department.id"
     )
   }
 
