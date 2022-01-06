@@ -6,9 +6,9 @@ require('dotenv').config();
 const connection = mysql.createConnection(
   {
     host: 'localhost',
-    // Your mySQL username,
+    // My mySQL username.
     user: 'root',
-    // Your MySQL password
+    // My MySQL password that is being stored in a seperate file to keep it hidden. 
     password: process.env.DB_PW,
     database: 'employeemanager'
   },

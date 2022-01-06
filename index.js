@@ -3,6 +3,7 @@ const connection = require("./db/connection");
 const db = require("./db")
 const cTable = require('console.table');
 
+// This is the function to view all the departments
 function viewDepartments (){
   db.findAllDepartments()
   .then(([rows])=>{
@@ -11,7 +12,7 @@ function viewDepartments (){
   })
   .then(()=> mainMenu());
 }
-
+// This is the function to view all the roles
 function viewRoles () {
   db.findAllRoles()
   .then(([rows])=>{
@@ -20,7 +21,7 @@ function viewRoles () {
   })
   .then(()=> mainMenu());
 }
-
+// This is the function to view all the employees
 function viewEmployees () {
   db.findAllEmployees()
   .then(([rows])=>{
@@ -29,7 +30,7 @@ function viewEmployees () {
   })
   .then(()=> mainMenu());
 }
-
+// This is the first function to be called, the one that asks all the main questions.
 function mainMenu(){
   inquirer.prompt([
     {
@@ -58,7 +59,7 @@ function mainMenu(){
     }
   })
 };
-
+// This is the function to add a new department.
 function addDepartment (){
   inquirer.prompt([
     {
@@ -72,7 +73,7 @@ function addDepartment (){
     .then(()=> mainMenu())
   })
 }
-
+// This is the function to add a new role.
 function addRole(){
  db.findAllDepartments()
  .then(([rows])=>{
@@ -106,7 +107,7 @@ function addRole(){
   })
  })
 }
-
+// This is the function to add a new employee.
 function addEmployee(){
   db.findAllRoles()
   .then(([rows])=>{
@@ -116,7 +117,6 @@ function addEmployee(){
       name: job_title,
       value: id
     }))
-    // const managerChoices = roles.map(({ }))
     
     inquirer.prompt([
       {
@@ -139,7 +139,7 @@ function addEmployee(){
         type: "list",
         name: "manager_id",
         message: "Who is the employee's manager?",
-        choices: ["Giang", "Paige", "Ana", "Erin", "None"]
+        choices: ["4", "2", "7", "3", "Null"]
       }
     ])
     .then(employee=>{
@@ -149,21 +149,18 @@ function addEmployee(){
     })
   })
 };
-
+// This function updates current employees.
 function updateEmployeeRole(){
   db.findAllEmployees()
   .then(([rows])=>{
    let employees = rows;
-   console.log(employees)
    const employeeChoices = employees.map(({ id, first_name })=>({
      name: first_name, 
      value: id
    }));
-   console.log(employeeChoices)
    db.findAllRoles()
    .then(([rows]) => {
      let roles = rows;
-     console.log(roles)
      const rolesChoices = roles.map(({ id, job_title })=>({
        name: job_title,
        value: id
@@ -183,15 +180,14 @@ function updateEmployeeRole(){
         }
       ])
       .then(update=>{
-        let test = employees.filter(person => person.id === update.first_name)
-        console.log(test)
+        let updatedEmployee = employees.filter(person => person.id === update.first_name)
         db.updateEmployee(update)
-        .then(()=> console.log(`Changed ${test[0].first_name}'s role.`))
+        .then(()=> console.log(`Changed ${updatedEmployee[0].first_name}'s role.`))
         .then(()=> mainMenu())
       })
     })
   })
 }
 
-
+// The first function to be called that will start up the questions.
 mainMenu();

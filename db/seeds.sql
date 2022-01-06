@@ -1,3 +1,4 @@
+  -- Seeding the employeemanager database, with the tables and employee's for the tables
   INSERT INTO department (department_name)
 VALUES
   ('Engineering'), 
