@@ -36,7 +36,7 @@ function mainMenu(){
       type: "list",
       name: "memberChoice",
       message: "What would you like to do?",
-      choices: ["View All Departments", "View All Roles", "View All Employees", "Add Department", "Add Role", "Add Employee", "Update Employee Role" ]
+      choices: ["View All Departments", "View All Roles", "View All Employees", "Add Department", "Add Role", "Add Employee", "Update Employee Role", "Quit"]
     }
   ]).then(userChoice =>{
     if (userChoice.memberChoice === "View All Departments") {
@@ -51,9 +51,10 @@ function mainMenu(){
       addRole();
     } else if (userChoice.memberChoice === "Add Employee") {
       addEmployee();
-    } else {
-      console.log(employees)
+    } else if (userChoice.memberChoice === "Update Employee Role") {
       updateEmployeeRole();
+    } else {
+      console.log("Goodbye!")
     }
   })
 };
@@ -149,18 +150,46 @@ function addEmployee(){
   })
 };
 
-// .then(function ({ first_name, last_name, role_id, manager_id }) {
-//   let data = {first_name, last_name, role_id, manager_id}
-//    connection.query("INSERT INTO employee set ?", data, function (err, result) {
-//      if (err) throw err;
-//      console.log("Employee added!")
-//    });
-//  });
-// .then(function ({ first_name, last_name, manager }) {
-//   connection.query("INSERT INTO employee (first_name, last_name, manager) 
-//        VALUES ?", ('first_name', 'last_name', 'manager'), function (err, result) {
-//       if (err) throw err;
-// })
+function updateEmployeeRole(){
+  db.findAllEmployees()
+  .then(([rows])=>{
+   let employees = rows;
+   console.log(employees)
+   const employeeChoices = employees.map(({ id, first_name })=>({
+     name: first_name, 
+     value: id
+   }));
+   
+   db.findAllRoles()
+   .then(([rows]) => {
+     let roles = rows;
+     console.log(roles)
+     const rolesChoices = roles.map(({ id, job_title })=>({
+       name: job_title,
+       value: id
+     }))
+     inquirer.prompt([
+       {
+         type: "list",
+         name: "first_name",
+         message: "Who is the employee that you would like to update?",
+         choices: employeeChoices
+        },
+        {
+          type: "list",
+          name: "role_id",
+          message: "Which new role would you like to assign them to?",
+          choices: rolesChoices
+        }
+      ])
+      .then(update=>{
+        db.updateEmployee(update)
+        .then(()=> console.log(`Changed ${update.first_name}'s role.`))
+        .then(()=> mainMenu())
+      })
+    })
+  })
+}
 
 
 mainMenu();

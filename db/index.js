@@ -7,7 +7,10 @@ class DB {
 
   findAllEmployees(){
     return this.connection.promise().query(
-      "SELECT * FROM employee"
+      // "SELECT * FROM employee"
+      "SELECT employee.*, roles.job_title AS title, roles.salary, department.department_name AS department FROM employee LEFT JOIN roles ON employee.role_id = roles.id LEFT JOIN department ON roles.department_id = department.id;"
+    //   `SELECT employees.*, roles.job_title, roles.salary, departments.dept_name FROM employees LEFT JOIN roles ON employees.role_id = roles.id
+    // LEFT JOIN departments ON roles.dept_id = departments.id`
     )
   }
 
@@ -42,6 +45,11 @@ class DB {
     )
   }
 
+  updateEmployee(update){
+    return this.connection.promise().query(
+      "UPDATE employee ", update
+    )
+  }
 
 }
 
