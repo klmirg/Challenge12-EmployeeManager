@@ -16,7 +16,7 @@ Allows you to manage a team of employees in a database. Allowing you to view rol
 
 * [Contributions](#contributions)
 
-* [Credts](#credits)
+* [Credits](#credits)
 
 * [Questions](#questions)
 
