@@ -46,8 +46,9 @@ class DB {
   }
 
   updateEmployee(update){
+    console.log(update)
     return this.connection.promise().query(
-      "UPDATE employee ", update
+      "UPDATE employee SET role_id = ? WHERE id = ?", [update.role_id, update.first_name]
     )
   }
 

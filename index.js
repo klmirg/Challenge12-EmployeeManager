@@ -137,7 +137,7 @@ function addEmployee(){
       },
       {
         type: "list",
-        name: "manager",
+        name: "manager_id",
         message: "Who is the employee's manager?",
         choices: ["Giang", "Paige", "Ana", "Erin", "None"]
       }
@@ -159,7 +159,7 @@ function updateEmployeeRole(){
      name: first_name, 
      value: id
    }));
-   
+   console.log(employeeChoices)
    db.findAllRoles()
    .then(([rows]) => {
      let roles = rows;
@@ -183,8 +183,10 @@ function updateEmployeeRole(){
         }
       ])
       .then(update=>{
+        let test = employees.filter(person => person.id === update.first_name)
+        console.log(test)
         db.updateEmployee(update)
-        .then(()=> console.log(`Changed ${update.first_name}'s role.`))
+        .then(()=> console.log(`Changed ${test[0].first_name}'s role.`))
         .then(()=> mainMenu())
       })
     })
