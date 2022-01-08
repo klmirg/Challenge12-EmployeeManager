@@ -9,8 +9,6 @@ Allows you to manage a team of employees in a database. Allowing you to view rol
 * [Installation](#installation)
 
 * [Usage](#usage)
-
-* [Tests](#tests)
  
 * [Languages](#languages)
 
@@ -19,8 +17,6 @@ Allows you to manage a team of employees in a database. Allowing you to view rol
 * [Credits](#credits)
 
 * [Questions](#questions)
-
-
 
  ## Installation
 
@@ -32,12 +28,6 @@ Allows you to manage a team of employees in a database. Allowing you to view rol
 
 It is open to the public, so feel free to use it if you'd like.
 Here is a tutorial video on how to use it:
-
- ## Tests
-
- To run tests, run the following command:
-
- ' npm run test '
 
  ## Languages
  * JavaScript
