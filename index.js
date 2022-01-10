@@ -78,7 +78,6 @@ function addRole(){
  db.findAllDepartments()
  .then(([rows])=>{
   let departments = rows;
-  console.log(departments)
   const departmentChoices = departments.map(({ id, department_name })=>({
     name: department_name,
     value: id
@@ -112,7 +111,6 @@ function addEmployee(){
   db.findAllRoles()
   .then(([rows])=>{
     let roles = rows;
-    console.log(roles)
     const rolesChoices = roles.map(({ id, job_title })=>({
       name: job_title,
       value: id
