@@ -28,6 +28,7 @@ Allows you to manage a team of employees in a database. Allowing you to view rol
 
 It is open to the public, so feel free to use it if you'd like.
 Here is a tutorial video on how to use it:
+https://watch.screencastify.com/v/onkeoKa6O59mTORI2kAV
 
  ## Languages
  * JavaScript
